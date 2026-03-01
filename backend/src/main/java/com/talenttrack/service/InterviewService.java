@@ -24,9 +24,6 @@ public class InterviewService {
                 .build();
     }
 
-    // ===============================
-    // Allowed roles
-    // ===============================
     private final List<String> allowedRoles = List.of(
             "java developer",
             "frontend developer",
@@ -44,18 +41,12 @@ public class InterviewService {
             "cyber security"
     );
 
-    // ===============================
-    // Allowed levels
-    // ===============================
     private final List<String> allowedLevels = List.of(
             "beginner",
             "intermediate",
             "advanced"
     );
 
-    // ==========================================================
-    // 1️⃣ GENERATE QUESTIONS
-    // ==========================================================
     public List<String> generateQuestions(String role, String level) {
 
         validateRoleAndLevel(role, level);
@@ -90,9 +81,6 @@ public class InterviewService {
                 .collect(Collectors.toList());
     }
 
-    // ==========================================================
-    // 2️⃣ EVALUATE FULL INTERVIEW (Single Final Feedback)
-    // ==========================================================
     public InterviewEvaluationResponse evaluateInterview(
             String role,
             String level,
@@ -157,9 +145,6 @@ public class InterviewService {
         );
     }
 
-    // ==========================================================
-    // COMMON METHODS
-    // ==========================================================
 
     private void validateRoleAndLevel(String role, String level) {
 

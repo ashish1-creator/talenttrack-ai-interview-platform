@@ -9,8 +9,6 @@ public class InterviewEvaluationRequest {
     private List<String> questions;
     private List<String> answers;
 
-    // ===== Getters =====
-
     public String getRole() {
         return role;
     }
@@ -26,8 +24,6 @@ public class InterviewEvaluationRequest {
     public List<String> getAnswers() {
         return answers;
     }
-
-    // ===== Setters =====
 
     public void setRole(String role) {
         this.role = role;

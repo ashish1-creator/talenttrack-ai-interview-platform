@@ -9,5 +9,4 @@ public class TalenttrackBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TalenttrackBackendApplication.class, args);
 	}
-
 }

@@ -17,9 +17,6 @@ public class InterviewController {
     @Autowired
     private InterviewService interviewService;
 
-    // ==========================================
-    // 1️⃣ Generate Interview Questions
-    // ==========================================
     @PostMapping("/generate")
     public List<String> generateQuestions(@RequestBody InterviewRequest request) {
 

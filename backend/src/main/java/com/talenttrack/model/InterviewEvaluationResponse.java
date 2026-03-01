@@ -21,7 +21,6 @@ public class InterviewEvaluationResponse {
         this.finalFeedback = finalFeedback;
         this.recommendation = recommendation;
     }
-
     public int getOverallScore() { return overallScore; }
     public void setOverallScore(int overallScore) { this.overallScore = overallScore; }
 

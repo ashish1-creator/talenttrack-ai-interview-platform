@@ -1,7 +1,6 @@
 package com.talenttrack.model;
 
     public class InterviewRequest {
-
         private String role;
         private String level;
 
@@ -28,5 +27,4 @@ package com.talenttrack.model;
         public void setLevel(String level) {
             this.level = level;
         }
-
     }
