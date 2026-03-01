@@ -12,8 +12,8 @@ function App() {
   const [answers, setAnswers] = useState([]);
   const [evaluation, setEvaluation] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  
   const roles = [
     "Java Developer",
     "Frontend Developer",
@@ -33,20 +33,27 @@ function App() {
 
   const levels = ["Beginner", "Intermediate", "Advanced"];
 
+  
   const handleStart = async () => {
-    if (!role || !level) return;
+    if (!role || !level) {
+      alert("Please select role and level.");
+      return;
+    }
 
     try {
       setLoading(true);
+      setEvaluation(null);
       const data = await generateQuestions(role, level);
       setQuestions(data);
       setAnswers(new Array(data.length).fill(""));
     } catch (error) {
-      alert("Failed to generate questions.");
+      console.error(error);
+      alert("Failed to generate questions. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
 
   const handleAnswerChange = (index, value) => {
     const updated = [...answers];
@@ -55,7 +62,16 @@ function App() {
   };
 
   const handleSubmit = async () => {
+    const hasEmpty = answers.some(ans => ans.trim() === "");
+
+    if (hasEmpty) {
+      alert("Please answer all questions before submitting.");
+      return;
+    }
+
     try {
+      setSubmitting(true);
+
       const response = await axios.post(
         `${API_BASE}/evaluate-interview`,
         {
@@ -67,9 +83,12 @@ function App() {
       );
 
       setEvaluation(response.data);
+
     } catch (error) {
       console.error(error);
-      alert("Evaluation failed.");
+      alert("Evaluation failed. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -109,17 +128,25 @@ function App() {
               onClick={handleStart}
               disabled={!role || !level || loading}
             >
-              {loading ? "Generating..." : "Start Interview"}
+              {loading ? "Generating Questions..." : "Start Interview"}
             </button>
+
+            {loading && (
+              <p style={{ marginTop: "10px" }}>
+                Please wait, AI is generating your questions...
+              </p>
+            )}
           </>
         )}
-
         {questions.length > 0 && !evaluation && (
           <>
             <h1>Interview Questions</h1>
 
             {questions.map((q, index) => (
-              <div key={index} style={{ marginBottom: "20px", textAlign: "left" }}>
+              <div
+                key={index}
+                style={{ marginBottom: "20px", textAlign: "left" }}
+              >
                 <p><strong>{index + 1}. {q}</strong></p>
                 <textarea
                   className="input"
@@ -133,12 +160,21 @@ function App() {
               </div>
             ))}
 
-            <button className="primary-btn" onClick={handleSubmit}>
-              Submit Interview
+            <button
+              className="primary-btn"
+              onClick={handleSubmit}
+              disabled={submitting}
+            >
+              {submitting ? "Evaluating..." : "Submit Interview"}
             </button>
+
+            {submitting && (
+              <p style={{ marginTop: "10px" }}>
+                AI is evaluating your answers, please wait...
+              </p>
+            )}
           </>
         )}
-
         {evaluation && (
           <>
             <h1>Interview Evaluation</h1>
