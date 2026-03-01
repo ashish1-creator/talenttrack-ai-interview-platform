@@ -3,6 +3,8 @@ import { useState } from "react";
 import { generateQuestions } from "./services/api";
 import axios from "axios";
 
+const API_BASE = "https://talenttrack-ai-interview-platform.onrender.com/api/interview";
+
 function App() {
   const [role, setRole] = useState("");
   const [level, setLevel] = useState("");
@@ -54,7 +56,7 @@ function App() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/interview/evaluate-interview",
+        `${API_BASE}/evaluate-interview`,
         {
           role,
           level,
@@ -65,6 +67,7 @@ function App() {
 
       setEvaluation(response.data);
     } catch (error) {
+      console.error(error);
       alert("Evaluation failed.");
     }
   };
